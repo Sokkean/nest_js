@@ -15,9 +15,6 @@ export class AuthController {
       loginDto.password,
     );
 
-    Logger.log(token);
-
-
     return {
       status: 200,
       message: 'Login Successfully',
