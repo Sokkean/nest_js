@@ -9,4 +9,14 @@ export class CreateUserDto {
 
   @MinLength(6)
   password: string;
+
+  image?: string;
+
+  role_id: number;
+
+  department_id?: number;
+
+  phone?: string;
+
+  address?: string;
 }

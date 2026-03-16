@@ -1,5 +1,4 @@
 import { IsNotEmpty, IsEmail, MinLength, IsOptional, IsNumber } from 'class-validator';
-import { CreateUserDto } from './create-user.dto';
 
 export class UpdateUserDto {
   @IsOptional()
@@ -9,8 +8,4 @@ export class UpdateUserDto {
   @IsOptional()
   @IsEmail({}, { message: 'Email must be valid' })
   email?: string;
-
-  @IsOptional()
-  @MinLength(6, { message: 'Password must be at least 6 characters' })
-  password?: string;
 }

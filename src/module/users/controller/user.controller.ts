@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Put, Delete, Param, Body, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Param, Body, ParseIntPipe , UseGuards } from '@nestjs/common';
 import { UsersService } from '../service/users.service';
 import { CreateUserDto } from '../DTO/create-user.dto';
 import { UpdateUserDto } from '../DTO/update-user.dto';
+import { JwtAuthGuard } from '../../../common/guards/jwt.guard.module';
 
 @Controller('/api/v1/users')
 export class UsersController {
@@ -19,13 +20,13 @@ export class UsersController {
   }
 
   @Get()
+  @UseGuards(JwtAuthGuard)
   async findAll() {
     const user = await this.usersService.findAll();
 
     return {
       status: 200,
       result:user
-      
     };
   }
 
