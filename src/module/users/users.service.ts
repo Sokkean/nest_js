@@ -1,10 +1,10 @@
 // src/modules/users/services/users.service.ts
-import { Injectable, NotFoundException, ConflictException  } from '@nestjs/common';
+import { Injectable, NotFoundException, ConflictException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { User } from '../entities/user.entities';
-import { CreateUserDto } from '../DTO/create-user.dto';
-import { UpdateUserDto } from '../DTO/update-user.dto';
+import { User } from '../users/user.entities';
+import { CreateUserDto } from '../users/DTO/create-user.dto';
+import { UpdateUserDto } from '../users/DTO/update-user.dto';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
@@ -12,7 +12,7 @@ export class UsersService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>, // ✅ Inject repository directly
-  ) {}
+  ) { }
 
   async create(createUserDto: CreateUserDto): Promise<User> {
     const existingUser = await this.userRepository.findOne({
