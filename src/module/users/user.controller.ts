@@ -1,8 +1,22 @@
-import { Controller, Get, Post, Put, Delete, Param, Body, ParseIntPipe , UseGuards } from '@nestjs/common';
+import { 
+  Controller,
+  Get,
+  Post,
+  Put,
+  Delete,
+  Param,
+  Body,
+  ParseIntPipe,
+  UseGuards,
+  Query,
+  HttpCode,
+  HttpStatus
+ } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { CreateUserDto } from '../users/DTO/create-user.dto';
 import { UpdateUserDto } from '../users/DTO/update-user.dto';
 import { JwtAuthGuard } from '../../common/guards/jwt.guard.module';
+import { ResponseHelper } from '../../common/helpers/response.heper';
 
 @Controller('/api/v1/users')
 export class UsersController {
@@ -21,13 +35,10 @@ export class UsersController {
 
   @Get()
   @UseGuards(JwtAuthGuard)
-  async findAll() {
-    const user = await this.usersService.findAll();
-
-    return {
-      status: 200,
-      result:user
-    };
+  @HttpCode(HttpStatus.OK)
+  async findAll(@Query('page') page?: number, @Query('perPage') perPage?: number) {
+    const user = await this.usersService.findAll(page, perPage);
+    return user;
   }
 
   @Get(':id')

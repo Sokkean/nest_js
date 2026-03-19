@@ -1,11 +1,13 @@
 // src/modules/users/services/users.service.ts
-import { Injectable, NotFoundException, ConflictException } from '@nestjs/common';
+import { Injectable, NotFoundException, ConflictException, HttpCode, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from '../users/user.entities';
 import { CreateUserDto } from '../users/DTO/create-user.dto';
 import { UpdateUserDto } from '../users/DTO/update-user.dto';
 import * as bcrypt from 'bcrypt';
+import { ResponseHelper } from '../../common/helpers/response.heper';
+import { PaginationHelper } from '../../common/helpers/pagination.heper';
 
 @Injectable()
 export class UsersService {
@@ -35,10 +37,20 @@ export class UsersService {
     return await this.userRepository.save(user);
   }
 
-  async findAll(): Promise<User[]> {
-    return this.userRepository.find({
-      select: ['id', 'name', 'email', 'role_id', 'department_id', 'phone', 'address', 'is_active', 'is_deleted', 'created_at', 'updated_at'],
+  async findAll(page: number = 1, perPage: number = 10): Promise<any> {
+    const [user, total] = await this.userRepository.findAndCount({
+      select: ['id', 'name', 'email', 'role_id', 'department_id', 'phone', 'address'],
+      order: {
+        id: 'DESC',
+      },
+      where:{
+        is_active: true,
+      },
+      skip: (page - 1) * perPage,
+      take: perPage,
     });
+
+    return PaginationHelper.paginate(page, perPage, total, user);
   }
 
   async findOne(id: number): Promise<User> {
