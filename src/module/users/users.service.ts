@@ -6,7 +6,6 @@ import { User } from '../users/user.entities';
 import { CreateUserDto } from '../users/DTO/create-user.dto';
 import { UpdateUserDto } from '../users/DTO/update-user.dto';
 import * as bcrypt from 'bcrypt';
-import { ResponseHelper } from '../../common/helpers/response.heper';
 import { PaginationHelper } from '../../common/helpers/pagination.heper';
 
 @Injectable()

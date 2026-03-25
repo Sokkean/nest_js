@@ -18,7 +18,7 @@ import { UpdateUserDto } from '../users/DTO/update-user.dto';
 import { JwtAuthGuard } from '../../common/guards/jwt.guard.module';
 import { ResponseHelper } from '../../common/helpers/response.heper';
 
-@Controller('/api/v1/users')
+@Controller('/users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
@@ -26,11 +26,7 @@ export class UsersController {
   async create(@Body() createUserDto: CreateUserDto) {
     const user = await this.usersService.create(createUserDto);
 
-    return {
-      status: 200,
-      message: 'Created User Successfully',
-      result: user.id,
-    };
+    return ResponseHelper.created(user.id);
   }
 
   @Get()
@@ -44,12 +40,8 @@ export class UsersController {
   @Get(':id')
   async findOne(@Param('id', ParseIntPipe) id: number) {
     const user = await this.usersService.findOne(id);
-    console.log(user);
 
-    return {
-      status: 200,
-      result:user
-    };
+    return ResponseHelper.success(user);
   }
 
   @Put(':id')

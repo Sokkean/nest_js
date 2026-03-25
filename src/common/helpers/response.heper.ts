@@ -12,7 +12,6 @@ export class ResponseHelper {
     static success(data: any) {
         return {
             status: 200,
-            message: 'Success',
             result: data,
         };
     }
@@ -69,14 +68,6 @@ export class ResponseHelper {
         return {
             status: 400,
             message: 'Bad Request',
-            result: data,
-        };
-    }
-
-    static conflict(data: any) {
-        return {
-            status: 409,
-            message: 'Conflict',
             result: data,
         };
     }

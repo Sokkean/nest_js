@@ -14,6 +14,6 @@ export class UsersModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(AuthMiddleware) // you can also add LoggerMiddleware here
-      .forRoutes({ path: '/api/v1/users', method: RequestMethod.GET }); // apply middleware to all routes in this controller
+      .forRoutes({ path: '/users', method: RequestMethod.GET }); // apply middleware to all routes in this controller
   }
 }
