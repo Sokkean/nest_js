@@ -5,6 +5,7 @@ import { LoginDto } from './dto/login.dto';
 @Controller('/auth')
 export class AuthController {
 
+  //Injection or constructor
   constructor(private authService: AuthService) { }
 
   @Post('/login')
